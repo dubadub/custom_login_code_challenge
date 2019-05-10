@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:handle) { "captain" }
+  let(:captain) { User.new(handle: handle) }
 
   describe "#handle" do
     describe "uniq check" do
-      let(:handle) { "captain" }
-
       before do
-        User.create!(handle: handle)
+        captain.save!
       end
 
       it "shouldn't allow a new user with the same handle" do
@@ -20,12 +20,30 @@ RSpec.describe User, type: :model do
     end
   end
 
-
   describe "#failed_logins_count" do
     it "should be 0 as default" do
-      captain = User.new(handle: "captain")
-
       expect(captain.failed_logins_count).to eq(0)
+    end
+  end
+
+  describe "#password" do
+    let(:password) { "my_password" }
+
+    before { captain.password = password }
+
+    it "encrypts password" do
+      expect(captain.encrypted_password).to_not eq(password)
+    end
+
+    it "adds salt" do
+      previous_encrypted_password = captain.password
+      captain.password = password
+      expect(captain.encrypted_password).to_not eq(previous_encrypted_password)
+    end
+
+    it "properly compares passwords" do
+      expect(captain.password).to eq(password)
+      expect(captain.password).to_not eq(password.reverse)
     end
   end
 end
