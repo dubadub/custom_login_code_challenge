@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_10_151221) do
+ActiveRecord::Schema.define(version: 2019_05_10_153508) do
 
   create_table "users", force: :cascade do |t|
     t.string "handle"
     t.string "encrypted_password"
-    t.string "salt"
     t.integer "failed_logins_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
