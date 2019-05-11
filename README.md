@@ -1,4 +1,22 @@
-# Code challenge for Longboat
+# Code challenge for CustomLogin
+
+## Setup
+
+Run `bundle` and then `rails db:migrate`.
+
+## Run tests
+
+Run `rspec`.
+
+## Run server
+
+Run `rails s`.
+
+## Seed database with user
+
+Run `rails db:seed`. It will create a user with handle "captain" and password "hello".
+
+## Original Spec
 
 - [x] Create a basic Rails application using a SQL database.
 
@@ -13,5 +31,3 @@
 - [x] Include unit tests for the models and controllers created.
 
 - [x] Do not use libraries or features that already encapsulate a lot of this process (e.g. devise or has_secure_password).
-
-- [ ] Once you're happy with what you have, zip up the Rails directory and provide that to us for assessment.

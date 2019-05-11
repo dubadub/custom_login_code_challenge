@@ -55,7 +55,7 @@ class Session
   # Side-effects
 
   def set_user
-    @user = User.find_by(handle: handle) if handle
+    @user = User.find_by('lower(handle) = ?', handle.downcase) if handle
   end
 
   def check_user_presence
