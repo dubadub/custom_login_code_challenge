@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:handle) { "captain" }
-  let(:captain) { User.new(handle: handle) }
+  let(:captain) { described_class.new(handle: handle) }
 
   describe "#handle" do
     describe "uniq check" do
@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
       end
 
       it "shouldn't allow a new user with the same handle" do
-        other_captain = User.new(handle: handle)
+        other_captain = described_class.new(handle: handle)
 
         expect(other_captain).to be_invalid
         expect(other_captain.errors.full_messages).to include("Handle has already been taken")

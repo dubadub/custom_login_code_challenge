@@ -7,47 +7,23 @@ class SessionsController < ApplicationController
   def create
     @session = Session.new(session_params)
 
-    if (user = User.find_by(handle: @session.handle))
-      if user.failed_logins_count > 2
-        flash[:error] = t(".we_locked_account")
+    if @session.save
+      login!(@session.user_id)
 
-        render :new, status: :unprocessable_entity
-      elsif user.password == @session.password
-        session[:user_id] = user.id
+      flash[:notice] = t(".successful_login")
 
-        user.update(failed_logins_count: 0) if user.failed_logins_count == 0
-
-        flash[:notice] = t(".successful_login")
-
-        redirect_to pages_home_path
-      else
-        user.increment!(:failed_logins_count)
-
-        if user.failed_logins_count > 2
-          flash[:error] = t(".we_locked_account")
-
-          render :new, status: :unprocessable_entity
-        else
-          if user.failed_logins_count == 0
-            flash[:error] = t(".user_not_found")
-          else
-            flash[:error] = t(".we_will_lock_account")
-          end
-
-          render :new, status: :unprocessable_entity
-        end
-      end
+      redirect_to pages_home_path
     else
-      flash[:error] = t(".user_not_found")
+      flash[:error] = @session.errors.full_messages.join(". ")
 
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    session.delete(:user_id)
+    logout!
 
-    flash[:notice] = t(".successfully_loged_out")
+    flash[:notice] = t(".successfully_logged_out")
 
     redirect_to pages_home_path
   end

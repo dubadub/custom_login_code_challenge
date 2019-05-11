@@ -46,7 +46,7 @@ RSpec.describe SessionsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "returns http redirect" do
-      controller.session[:user_id] = 100500
+      controller.login!(100500)
       delete :destroy
       expect(response).to have_http_status(302)
     end

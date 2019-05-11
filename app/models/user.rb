@@ -7,9 +7,7 @@ class User < ApplicationRecord
 
   def password
     @password ||= begin
-      if encrypted_password
-        BCrypt::Password.new(encrypted_password)
-      end
+      BCrypt::Password.new(encrypted_password) if encrypted_password
     end
   end
 

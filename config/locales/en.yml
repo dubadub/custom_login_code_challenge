@@ -5,4 +5,4 @@ en:
     user_not_found: "We did't find username or password you provided."
     we_locked_account: "Account is locked, please contact us for support."
     we_will_lock_account: "We lock account if wrong password entered 3 times."
-    successfully_loged_out: "You logged out."
+    successfully_logged_out: "You logged out."
