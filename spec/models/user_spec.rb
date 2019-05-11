@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   describe "#handle" do
     describe "uniq check" do
       before do
+        captain.password = "my secret password"
         captain.save!
       end
 
@@ -35,7 +36,7 @@ RSpec.describe User, type: :model do
       expect(captain.encrypted_password).to_not eq(password)
     end
 
-    it "adds salt" do
+    it "adds salt (a new hash for the same password)" do
       previous_encrypted_password = captain.password
       captain.password = password
       expect(captain.encrypted_password).to_not eq(previous_encrypted_password)

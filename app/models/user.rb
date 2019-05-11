@@ -1,9 +1,16 @@
 class User < ApplicationRecord
 
-  validates :handle, uniqueness: true
+  define_attribute_method :password
+
+  validates :handle, presence: true, uniqueness: true
+  validates :password, presence: true
 
   def password
-    @password ||= BCrypt::Password.new(encrypted_password)
+    @password ||= begin
+      if encrypted_password
+        BCrypt::Password.new(encrypted_password)
+      end
+    end
   end
 
   def password=(new_password)
